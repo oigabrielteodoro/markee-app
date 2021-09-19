@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Logo /> should render correctly 1`] = `
+.c0 {
+  width: 16.4rem;
+  height: 4.4rem;
+}
+
+<img
+  alt="Markee App"
+  class="c0"
+  src="test-file-stub"
+/>
+`;
