@@ -1,13 +1,9 @@
-import React, { FormEvent } from 'react'
+import React from 'react'
 import { AiOutlineCheck } from 'react-icons/ai'
 import { FiFileText, FiPlus, FiX } from 'react-icons/fi'
 
-import * as R from 'ramda'
-import { pipe } from 'fp-ts/function'
-
 import { v4 as uuid } from 'uuid'
 
-import { File } from 'types'
 import { theme } from 'styles'
 import { useFile } from 'context'
 
@@ -16,10 +12,10 @@ import { Logo } from '..'
 import * as S from './Sidebar.styled'
 
 export function Sidebar() {
-  const { files, createFile, deleteFile, updateFile } = useFile()
+  const { files, navigate, create, remove } = useFile()
 
   function handleCreate() {
-    createFile({
+    create({
       id: uuid(),
       title: 'Sem título',
       content: '',
@@ -27,20 +23,6 @@ export function Sidebar() {
       is_auto_focus: true,
       status: 'saved',
     })
-  }
-
-  function handleChangeTitle(file: File, event: FormEvent<HTMLInputElement>) {
-    event.preventDefault()
-
-    updateFile(
-      pipe(
-        file,
-        R.omit(['title']),
-        R.mergeRight({
-          title: event.currentTarget.value,
-        }),
-      ),
-    )
   }
 
   return (
@@ -59,38 +41,43 @@ export function Sidebar() {
       </S.NewFileButton>
 
       <S.FileList>
-        {files.map((file) => (
-          <S.FileListItem
-            key={file.id}
-            isSaved={file.status === 'saved'}
-            isSelected={file.is_active}
-          >
-            <FiFileText size={24} strokeWidth={1.5} />
+        {files.map((file) => {
+          const isSaved = file.status === 'saved'
+          const isSaving = file.status === 'saving'
+          const isSavingCompleted = file.status === 'saving-completed'
 
-            <S.Title
-              onBlur={(event) => handleChangeTitle(file, event)}
-              autoFocus={file.is_auto_focus}
-              defaultValue={file.title}
-            />
+          return (
+            <S.FileListItem
+              key={file.id}
+              isSelected={file.is_active}
+              onClick={() => navigate(file)}
+            >
+              <FiFileText size={24} strokeWidth={1.5} />
 
-            <section>
-              <button type='button' onClick={() => deleteFile(file.id)}>
-                <FiX size={18} color={theme.colors.white} />
-              </button>
+              {file.title}
 
-              {file.status === 'saving' && (
-                <S.SavingIcon
-                  size={14}
-                  strokeWidth={1.5}
-                  color={theme.colors.blue[500]}
-                />
-              )}
-              {file.status === 'saving-completed' && (
-                <AiOutlineCheck size={16} color={theme.colors.blue[500]} />
-              )}
-            </section>
-          </S.FileListItem>
-        ))}
+              <section>
+                {isSaved && (
+                  <button type='button' onClick={() => remove(file.id)}>
+                    <FiX size={18} color={theme.colors.white} />
+                  </button>
+                )}
+
+                {isSaving && (
+                  <S.SavingIcon
+                    size={14}
+                    strokeWidth={1.5}
+                    color={theme.colors.blue[500]}
+                  />
+                )}
+
+                {isSavingCompleted && (
+                  <AiOutlineCheck size={14} color={theme.colors.blue[500]} />
+                )}
+              </section>
+            </S.FileListItem>
+          )
+        })}
       </S.FileList>
     </S.Container>
   )

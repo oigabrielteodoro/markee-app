@@ -4,8 +4,8 @@ import { AiOutlineLoading } from 'react-icons/ai'
 import { theme } from 'styles'
 
 type FileListItemProps = {
-  isSaved?: boolean
   isSelected?: boolean
+  isLoading?: boolean
 }
 
 export const Container = styled.div`
@@ -23,7 +23,9 @@ export const Container = styled.div`
 
 export const Title = styled.input`
   border: 0;
-  width: 70%;
+  width: 100%;
+  max-width: 65%;
+  white-space: nowrap;
   background: transparent;
   font-size: ${theme.font.sizes.paragraph};
 `
@@ -87,6 +89,7 @@ export const FileListItem = styled.li<FileListItemProps>`
   padding: 1rem 1.6rem;
   border-radius: 0.5rem;
   transition: background 0.2s;
+  height: 5rem;
   cursor: pointer;
 
   &:hover {
@@ -121,7 +124,7 @@ export const FileListItem = styled.li<FileListItemProps>`
     }
   }
 
-  svg {
+  > svg {
     margin-right: 1rem;
   }
 
@@ -129,8 +132,9 @@ export const FileListItem = styled.li<FileListItemProps>`
     margin-left: auto;
   }
 
-  ${({ isSaved }) =>
-    !isSaved &&
+  ${({ isLoading, isSelected }) =>
+    isSelected &&
+    !isLoading &&
     css`
       &::after {
         content: '';
