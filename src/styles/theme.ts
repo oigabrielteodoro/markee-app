@@ -32,18 +32,6 @@ export const theme = {
       900: '#1e293b',
     },
   },
-  spacing: {
-    0: '0',
-    1: '0.4rem',
-    2: '0.8rem',
-    3: '1.6rem',
-    4: '2.4rem',
-    5: '3.2rem',
-    6: '4.0rem',
-    7: '4.8rem',
-    8: '5.6rem',
-    9: '6.4rem',
-  },
   shadows: {
     small: '0 0.9rem 1.8rem rgba(161, 161, 161, 0.1)',
     large: '0 0.4rem 2.5rem rgba(0, 0, 0, 0.1)',
