@@ -23,7 +23,7 @@ export const Container = styled.div`
 
 export const Title = styled.input`
   border: 0;
-  width: 50%;
+  width: 70%;
   background: transparent;
   font-size: ${theme.font.sizes.paragraph};
 `
@@ -151,11 +151,6 @@ export const FileListItem = styled.li<FileListItemProps>`
       input {
         color: ${theme.colors.white};
         opacity: 1;
-      }
-
-      &:hover button {
-        opacity: 0;
-        visibility: hidden;
       }
 
       svg {

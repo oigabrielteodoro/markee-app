@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react'
+import React, { FormEvent } from 'react'
 import { AiOutlineCheck } from 'react-icons/ai'
 import { FiFileText, FiPlus, FiX } from 'react-icons/fi'
 
@@ -6,41 +6,35 @@ import { v4 as uuid } from 'uuid'
 
 import { File } from 'types'
 import { theme } from 'styles'
+import { useFile } from 'context'
 
 import { Logo } from '..'
 
 import * as S from './Sidebar.styled'
 
 export function Sidebar() {
-  const [files, setFiles] = useState<File[]>([])
+  const { files, createFile, deleteFile, updateFile } = useFile()
 
   function handleCreate() {
-    setFiles((prevState) => [
-      ...prevState,
-      {
-        id: uuid(),
-        title: '',
-        content: '',
-        created_at: new Date(),
-        updated_at: new Date(),
-        is_saved: true,
-        is_saving: false,
-        is_saving_completed: true,
-        is_auto_focus: true,
-      },
-    ])
+    createFile({
+      id: uuid(),
+      title: 'Sem título',
+      content: '',
+      is_active: true,
+      is_auto_focus: true,
+      status: 'saved',
+    })
   }
 
-  function handleDelete(id: string) {
-    setFiles((prevState) => prevState.filter((file) => file.id !== id))
-  }
-
-  function handleChangeTitle(event: FormEvent<HTMLDivElement>) {
+  function handleChangeTitle(file: File, event: FormEvent<HTMLInputElement>) {
     event.preventDefault()
 
-    const text = event.currentTarget.innerText
+    const text = event.currentTarget.value
 
-    window.console.log(text)
+    updateFile({
+      ...file,
+      title: text,
+    })
   }
 
   return (
@@ -60,27 +54,32 @@ export function Sidebar() {
 
       <S.FileList>
         {files.map((file) => (
-          <S.FileListItem key={file.id} isSaved={file.is_saved}>
+          <S.FileListItem
+            key={file.id}
+            isSaved={file.status === 'saved'}
+            isSelected={file.is_active}
+          >
             <FiFileText size={24} strokeWidth={1.5} />
 
             <S.Title
-              onChange={handleChangeTitle}
+              onBlur={(event) => handleChangeTitle(file, event)}
               autoFocus={file.is_auto_focus}
+              defaultValue={file.title}
             />
 
             <section>
-              <button type='button' onClick={() => handleDelete(file.id)}>
+              <button type='button' onClick={() => deleteFile(file.id)}>
                 <FiX size={18} color={theme.colors.white} />
               </button>
 
-              {file.is_saving && (
+              {file.status === 'saving' && (
                 <S.SavingIcon
                   size={14}
                   strokeWidth={1.5}
                   color={theme.colors.blue[500]}
                 />
               )}
-              {file.is_saving_completed && (
+              {file.status === 'saving-completed' && (
                 <AiOutlineCheck size={16} color={theme.colors.blue[500]} />
               )}
             </section>
