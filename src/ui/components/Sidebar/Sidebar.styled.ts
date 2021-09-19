@@ -3,7 +3,7 @@ import { AiOutlineLoading } from 'react-icons/ai'
 
 import { theme } from 'styles'
 
-type FileListItemProps = {
+type ArchiveListItemProps = {
   isSelected?: boolean
   isEditing?: boolean
 }
@@ -75,22 +75,25 @@ export const Separator = styled.div`
   }
 `
 
-export const FileList = styled.ul`
+export const ArchiveList = styled.ul`
   display: grid;
   grid-gap: 1.8rem;
   margin-top: 3.5rem;
 `
 
-export const FileListItem = styled.li<FileListItemProps>`
-  opacity: 0.65;
-  color: ${theme.colors.white};
+export const ArchiveListItem = styled.li<ArchiveListItemProps>`
   display: flex;
   align-items: center;
   padding: 1rem 1.6rem;
   border-radius: 0.5rem;
   transition: background 0.2s;
+  color: rgba(255, 255, 255, 0.65);
   height: 5rem;
   cursor: pointer;
+
+  a {
+    color: rgba(255, 255, 255, 0.65);
+  }
 
   &:hover {
     background: rgba(255, 255, 255, 0.05);
@@ -150,6 +153,10 @@ export const FileListItem = styled.li<FileListItemProps>`
     css`
       opacity: 1;
       background: rgba(255, 255, 255, 0.05);
+
+      a {
+        color: ${theme.colors.white};
+      }
 
       input {
         color: ${theme.colors.white};

@@ -27,23 +27,23 @@ export function Sidebar() {
         Adicionar arquivo
       </S.NewFileButton>
 
-      <S.FileList>
+      <S.ArchiveList>
         {archives.map((archive) => {
           const isSaved = archive.status === 'saved'
           const isEditing = archive.status === 'editing'
           const isLoading = archive.status === 'loading'
 
           return (
-            <S.FileListItem
+            <S.ArchiveListItem
               key={archive.id}
               isEditing={isEditing}
               isSelected={archive.active}
             >
               <FiFileText size={24} strokeWidth={1.5} />
 
-              <div onClick={() => inspectArchive(archive.id)}>
+              <a href='/' onClick={() => inspectArchive(archive.id)}>
                 {archive.title}
-              </div>
+              </a>
 
               <section>
                 {(isSaved || isEditing) && (
@@ -64,13 +64,13 @@ export function Sidebar() {
                 )}
 
                 {isSaved && !isEditing && (
-                  <FiCheck size={15} color={theme.colors.blue[500]} />
+                  <FiCheck size={16} color={theme.colors.blue[500]} />
                 )}
               </section>
-            </S.FileListItem>
+            </S.ArchiveListItem>
           )
         })}
-      </S.FileList>
+      </S.ArchiveList>
     </S.Container>
   )
 }
