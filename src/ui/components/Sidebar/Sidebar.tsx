@@ -2,6 +2,9 @@ import React, { FormEvent } from 'react'
 import { AiOutlineCheck } from 'react-icons/ai'
 import { FiFileText, FiPlus, FiX } from 'react-icons/fi'
 
+import * as R from 'ramda'
+import { pipe } from 'fp-ts/function'
+
 import { v4 as uuid } from 'uuid'
 
 import { File } from 'types'
@@ -29,12 +32,15 @@ export function Sidebar() {
   function handleChangeTitle(file: File, event: FormEvent<HTMLInputElement>) {
     event.preventDefault()
 
-    const text = event.currentTarget.value
-
-    updateFile({
-      ...file,
-      title: text,
-    })
+    updateFile(
+      pipe(
+        file,
+        R.omit(['title']),
+        R.mergeRight({
+          title: event.currentTarget.value,
+        }),
+      ),
+    )
   }
 
   return (
