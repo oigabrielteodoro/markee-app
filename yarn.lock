@@ -7282,6 +7282,16 @@ invariant@^2.2.3, invariant@^2.2.4:
   dependencies:
     loose-envify "^1.0.0"
 
+io-ts-types@0.5.16:
+  version "0.5.16"
+  resolved "https://registry.yarnpkg.com/io-ts-types/-/io-ts-types-0.5.16.tgz#e9eed75371e217c97050cc507915e8eedc250946"
+  integrity sha512-h9noYVfY9rlbmKI902SJdnV/06jgiT2chxG6lYDxaYNp88HscPi+SBCtmcU+m0E7WT5QSwt7sIMj93+qu0FEwQ==
+
+io-ts@2.2.16:
+  version "2.2.16"
+  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.2.16.tgz#597dffa03db1913fc318c9c6df6931cb4ed808b2"
+  integrity sha512-y5TTSa6VP6le0hhmIyN0dqEXkrZeJLeC5KApJq6VLci3UEKF80lZ+KuoUs02RhBxNWlrqSNxzfI7otLX1Euv8Q==
+
 ip@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/ip/-/ip-1.1.5.tgz#bdded70114290828c0a039e72ef25f5aaec4354a"
@@ -9058,6 +9068,11 @@ mkdirp@^1.0.3, mkdirp@^1.0.4:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
+monocle-ts@2.3.11:
+  version "2.3.11"
+  resolved "https://registry.yarnpkg.com/monocle-ts/-/monocle-ts-2.3.11.tgz#562cd960bc24eaa84d9b6118d46a5441f3c0aac0"
+  integrity sha512-YJQdpDeKU0NNAecDjFgDDnDoivmf2nXsJZTRQdKh5jsPKG2lT/15dFnSuUcQoKB/VZN1z7jQ0B0bffbRFUtLmg==
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -9136,6 +9151,11 @@ nested-error-stacks@^2.0.0, nested-error-stacks@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/nested-error-stacks/-/nested-error-stacks-2.1.0.tgz#0fbdcf3e13fe4994781280524f8b96b0cdff9c61"
   integrity sha512-AO81vsIO1k1sM4Zrd6Hu7regmJN1NSiAja10gc4bX3F0wd+9rQmcuHQaHVQCYIEC8iFXnE+mavh23GOt7wBgug==
+
+newtype-ts@0.3.4:
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/newtype-ts/-/newtype-ts-0.3.4.tgz#65c74b7d5195edaa9abfcdba6549a33a5c0e298d"
+  integrity sha512-lFJnWAt0oXX1j1ErNy9RU5+FPNtVyzugHW2MchaaMiOeeS9LEmqAAOqyHPFQ0Uw895jStSYGSCslrByzYxFJYQ==
 
 nice-try@^1.0.4:
   version "1.0.5"

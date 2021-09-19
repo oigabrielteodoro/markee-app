@@ -1,29 +1,16 @@
 import React from 'react'
-import { AiOutlineCheck } from 'react-icons/ai'
-import { FiFileText, FiPlus, FiX } from 'react-icons/fi'
-
-import { v4 as uuid } from 'uuid'
+import { FiCheck, FiFileText, FiPlus, FiX } from 'react-icons/fi'
 
 import { theme } from 'styles'
-import { useFile } from 'context'
+import { useArchive } from 'context'
 
 import { Logo } from '..'
 
 import * as S from './Sidebar.styled'
 
 export function Sidebar() {
-  const { files, navigate, create, remove } = useFile()
-
-  function handleCreate() {
-    create({
-      id: uuid(),
-      title: 'Sem título',
-      content: '',
-      is_active: true,
-      is_auto_focus: true,
-      status: 'saved',
-    })
-  }
+  const { archives, createArchive, inspectArchive, deleteArchive } =
+    useArchive()
 
   return (
     <S.Container>
@@ -35,35 +22,40 @@ export function Sidebar() {
         <hr />
       </S.Separator>
 
-      <S.NewFileButton type='button' onClick={handleCreate}>
+      <S.NewFileButton type='button' onClick={createArchive}>
         <FiPlus size={16} />
         Adicionar arquivo
       </S.NewFileButton>
 
       <S.FileList>
-        {files.map((file) => {
-          const isSaved = file.status === 'saved'
-          const isSaving = file.status === 'saving'
-          const isSavingCompleted = file.status === 'saving-completed'
+        {archives.map((archive) => {
+          const isSaved = archive.status === 'saved'
+          const isEditing = archive.status === 'editing'
+          const isLoading = archive.status === 'loading'
 
           return (
             <S.FileListItem
-              key={file.id}
-              isSelected={file.is_active}
-              onClick={() => navigate(file)}
+              key={archive.id}
+              isEditing={isEditing}
+              isSelected={archive.active}
             >
               <FiFileText size={24} strokeWidth={1.5} />
 
-              {file.title}
+              <div onClick={() => inspectArchive(archive.id)}>
+                {archive.title}
+              </div>
 
               <section>
-                {isSaved && (
-                  <button type='button' onClick={() => remove(file.id)}>
+                {(isSaved || isEditing) && (
+                  <button
+                    type='button'
+                    onClick={() => deleteArchive(archive.id)}
+                  >
                     <FiX size={18} color={theme.colors.white} />
                   </button>
                 )}
 
-                {isSaving && (
+                {isLoading && !isSaved && (
                   <S.SavingIcon
                     size={14}
                     strokeWidth={1.5}
@@ -71,8 +63,8 @@ export function Sidebar() {
                   />
                 )}
 
-                {isSavingCompleted && (
-                  <AiOutlineCheck size={14} color={theme.colors.blue[500]} />
+                {isSaved && !isEditing && (
+                  <FiCheck size={15} color={theme.colors.blue[500]} />
                 )}
               </section>
             </S.FileListItem>

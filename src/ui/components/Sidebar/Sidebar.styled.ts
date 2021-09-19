@@ -5,7 +5,7 @@ import { theme } from 'styles'
 
 type FileListItemProps = {
   isSelected?: boolean
-  isLoading?: boolean
+  isEditing?: boolean
 }
 
 export const Container = styled.div`
@@ -132,9 +132,8 @@ export const FileListItem = styled.li<FileListItemProps>`
     margin-left: auto;
   }
 
-  ${({ isLoading, isSelected }) =>
-    isSelected &&
-    !isLoading &&
+  ${({ isEditing }) =>
+    isEditing &&
     css`
       &::after {
         content: '';

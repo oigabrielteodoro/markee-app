@@ -2,13 +2,13 @@ import React from 'react'
 
 import { Sidebar } from 'ui'
 import { GlobalStyle } from 'styles'
-import { FileProvider } from 'context'
+import { ArchiveProvider } from 'context'
 
 export function App() {
   return (
-    <FileProvider>
+    <ArchiveProvider>
       <GlobalStyle />
       <Sidebar />
-    </FileProvider>
+    </ArchiveProvider>
   )
 }
