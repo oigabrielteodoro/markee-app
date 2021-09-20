@@ -16,7 +16,7 @@ export const theme = {
       disclaimer: '1.2rem',
       small: '1.4rem',
       paragraph: '1.6rem',
-      subtitle: '1.6rem',
+      subtitle: '1.8rem',
       title: '2.4rem',
       headline: '3.2rem',
     },

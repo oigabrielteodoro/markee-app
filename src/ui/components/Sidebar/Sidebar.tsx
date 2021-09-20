@@ -14,7 +14,9 @@ export function Sidebar() {
 
   return (
     <S.Container>
-      <Logo />
+      <header>
+        <Logo />
+      </header>
 
       <S.Separator>
         <hr />
@@ -31,7 +33,7 @@ export function Sidebar() {
         {archives.map((archive) => {
           const isSaved = archive.status === 'saved'
           const isEditing = archive.status === 'editing'
-          const isLoading = archive.status === 'loading'
+          const isSaving = archive.status === 'saving'
 
           return (
             <S.ArchiveListItem
@@ -55,7 +57,7 @@ export function Sidebar() {
                   </button>
                 )}
 
-                {isLoading && !isSaved && (
+                {isSaving && !isSaved && (
                   <S.SavingIcon
                     size={14}
                     strokeWidth={1.5}

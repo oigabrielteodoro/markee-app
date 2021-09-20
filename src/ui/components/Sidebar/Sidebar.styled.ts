@@ -15,8 +15,12 @@ export const Container = styled.aside`
   display: flex;
   flex-direction: column;
   padding: 4.7rem 3.3rem;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  top: 0;
 
-  > img {
+  header {
     margin: 0 auto;
   }
 `

@@ -1,8 +1,22 @@
 /* eslint-disable no-sparse-arrays */
-import React, { createContext, ReactNode, useContext, useState } from 'react'
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 import { v4 } from 'uuid'
 
-import { fold, fromNullable, isSome, none, Option, some } from 'fp-ts/Option'
+import {
+  fold,
+  fromNullable,
+  isSome,
+  none,
+  Option,
+  some,
+  map,
+} from 'fp-ts/Option'
 
 import { Archive } from 'types'
 import { identity, pipe } from 'fp-ts/lib/function'
@@ -12,12 +26,13 @@ type ArchiveProviderProps = {
 }
 
 type ArchiveUpdateData = {
-  id: string
+  id?: string
   title?: string
   content?: string
 }
 
 type ArchiveContextData = {
+  archive?: Archive
   archives: Archive[]
   createArchive: () => void
   deleteArchive: (id: string) => void
@@ -39,7 +54,7 @@ const initialValue: Archive[] = [
 
 export function ArchiveProvider({ children }: ArchiveProviderProps) {
   const [archives, setArchives] = useState<Archive[]>(() => {
-    const storagedValue = getStorageValue()
+    const storagedValue = getFromStorage()
 
     return pipe(
       storagedValue,
@@ -47,15 +62,80 @@ export function ArchiveProvider({ children }: ArchiveProviderProps) {
     )
   })
 
+  useEffect(() => {
+    pipe(
+      getIdFromUrl(),
+      map((id) => {
+        setArchives((prevState) =>
+          prevState.map((archive) => ({
+            ...archive,
+            active: archive.id === id,
+          })),
+        )
+      }),
+    )
+  }, [])
+
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>
+
+    function updateStatus() {
+      const archive = archives.find((archive) => archive.active)
+
+      if (!archive || archive.status !== 'editing') return
+
+      timer = setTimeout(() => {
+        setArchives((prevState) =>
+          prevState.map((archive) => {
+            if (archive.active) {
+              return {
+                ...archive,
+                status: 'saving',
+              }
+            }
+
+            return archive
+          }),
+        )
+
+        setTimeout(() => {
+          setArchives((prevState) =>
+            prevState.map((archive) => {
+              if (archive.active) {
+                return {
+                  ...archive,
+                  status: 'saved',
+                }
+              }
+
+              return archive
+            }),
+          )
+        }, 300)
+      }, 300)
+    }
+
+    updateStatus()
+
+    return () => clearTimeout(timer)
+  }, [archives])
+
+  useEffect(() => {
+    const selectedArchive = archives.find((archive) => archive.active)
+
+    if (selectedArchive) {
+      window.history.replaceState(null, '', `/archive/${selectedArchive.id}`)
+    }
+  }, [archives])
+
   function createArchive() {
     setArchives((prevState) => {
       const newArchives: Archive[] = [
         ...prevState.map((archive) => ({
           ...archive,
           active: false,
-          status: 'saved' as 'saved',
         })),
-        { ...initialValue[0], id: v4(), status: 'editing' },
+        { ...initialValue[0], id: v4(), status: 'saved' },
       ]
 
       return storageValue(newArchives)
@@ -71,51 +151,28 @@ export function ArchiveProvider({ children }: ArchiveProviderProps) {
   }
 
   async function updateArchive({ id, title, content }: ArchiveUpdateData) {
+    if (!id) return
+
     const archive = getArchive(id)
 
     if (archive) {
-      await new Promise((resolve) => {
-        setTimeout(() => {
-          setArchives((prevState) => {
-            const newArchives = prevState.map((archive) => {
-              const isArchive = archive.id === id
+      setArchives((prevState) => {
+        const newArchives: Archive[] = prevState.map((archive) => {
+          const isArchive = archive.id === id
 
-              return {
-                ...archive,
-                status: isArchive ? 'loading' : archive.status,
-              }
-            })
+          if (isArchive) {
+            return {
+              ...archive,
+              title: title || archive.title,
+              content: content || archive.content,
+              status: 'editing',
+            }
+          }
 
-            return newArchives
-          })
+          return archive
+        })
 
-          resolve({})
-        }, 300)
-      })
-
-      await new Promise((resolve) => {
-        setTimeout(() => {
-          setArchives((prevState) => {
-            const newArchives: Archive[] = prevState.map((archive) => {
-              const isArchive = archive.id === id
-
-              if (isArchive) {
-                return {
-                  ...archive,
-                  title: title || archive.title,
-                  content: content || archive.content,
-                  status: 'saved',
-                }
-              }
-
-              return archive
-            })
-
-            return storageValue(newArchives)
-          })
-
-          resolve({})
-        }, 300)
+        return storageValue(newArchives)
       })
     }
   }
@@ -133,7 +190,6 @@ export function ArchiveProvider({ children }: ArchiveProviderProps) {
           return {
             ...archive,
             active: isArchive,
-            status: isArchive ? 'editing' : 'saved',
           }
         })
 
@@ -145,6 +201,7 @@ export function ArchiveProvider({ children }: ArchiveProviderProps) {
   return (
     <ArchiveContext.Provider
       value={{
+        archive: archives.find((archive) => archive.active),
         archives,
         createArchive,
         inspectArchive,
@@ -157,13 +214,23 @@ export function ArchiveProvider({ children }: ArchiveProviderProps) {
   )
 }
 
-function getStorageValue(): Option<Archive[]> {
+function getFromStorage(): Option<Archive[]> {
   const storagedValue = fromNullable(
     localStorage.getItem('@MarkeeApp:archives'),
   )
 
   if (isSome(storagedValue)) {
     return some(JSON.parse(storagedValue.value))
+  }
+
+  return none
+}
+
+function getIdFromUrl(): Option<string> {
+  const id = fromNullable(window.location.pathname.split('/archive/')[1])
+
+  if (isSome(id)) {
+    return some(id.value)
   }
 
   return none

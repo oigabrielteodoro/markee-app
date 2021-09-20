@@ -18,9 +18,13 @@ exports[`<Sidebar /> should render correctly 1`] = `
   -ms-flex-direction: column;
   flex-direction: column;
   padding: 4.7rem 3.3rem;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  top: 0;
 }
 
-.c0 > img {
+.c0 header {
   margin: 0 auto;
 }
 
@@ -182,11 +186,13 @@ exports[`<Sidebar /> should render correctly 1`] = `
 <aside
   class="c0"
 >
-  <img
-    alt="Markee App"
-    class="c1"
-    src="test-file-stub"
-  />
+  <header>
+    <img
+      alt="Markee App"
+      class="c1"
+      src="test-file-stub"
+    />
+  </header>
   <div
     class="c2"
   >

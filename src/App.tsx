@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Sidebar } from 'ui'
+import { Content, Sidebar } from 'ui'
 import { GlobalStyle } from 'styles'
 import { ArchiveProvider } from 'context'
 
@@ -8,7 +8,11 @@ export function App() {
   return (
     <ArchiveProvider>
       <GlobalStyle />
-      <Sidebar />
+
+      <main>
+        <Sidebar />
+        <Content />
+      </main>
     </ArchiveProvider>
   )
 }

@@ -8,7 +8,7 @@ export const archiveCodec = t.type({
   status: t.union([
     t.literal('editing'),
     t.literal('saved'),
-    t.literal('loading'),
+    t.literal('saving'),
   ]),
 })
 
