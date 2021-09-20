@@ -21,7 +21,8 @@ export const TypeArea = styled.div<TypeAreaProps>`
   textarea {
     height: 100%;
     border: 0;
-    font-size: ${theme.font.sizes.subtitle};
+    color: rgba(30, 41, 59, 0.86);
+    font-size: ${theme.font.sizes.paragraph};
     background: transparent;
     margin-top: 4.3rem;
     resize: none;
@@ -45,6 +46,7 @@ export const InputArea = styled.div`
     width: 100%;
     background: transparent;
     font-size: ${theme.font.sizes.subtitle};
+    color: rgba(30, 41, 59, 0.86);
     margin-left: 1.6rem;
   }
 `
