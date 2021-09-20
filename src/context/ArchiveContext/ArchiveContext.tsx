@@ -157,8 +157,8 @@ export function ArchiveProvider({ children }: ArchiveProviderProps) {
           if (isArchive) {
             return {
               ...archive,
-              title: title || archive.title,
-              content: content || archive.content,
+              title: title ?? archive.title,
+              content: content ?? archive.content,
               status: 'editing',
             }
           }
