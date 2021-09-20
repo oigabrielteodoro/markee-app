@@ -179,7 +179,7 @@ exports[`<Sidebar /> should render correctly 1`] = `
   color: #1fc8e1;
 }
 
-<div
+<aside
   class="c0"
 >
   <img
@@ -304,5 +304,5 @@ exports[`<Sidebar /> should render correctly 1`] = `
       </section>
     </li>
   </ul>
-</div>
+</aside>
 `;

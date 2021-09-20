@@ -8,7 +8,7 @@ type ArchiveListItemProps = {
   isEditing?: boolean
 }
 
-export const Container = styled.div`
+export const Container = styled.aside`
   height: 100vh;
   width: 33.2rem;
   background: ${theme.colors.neutral[900]};
