@@ -22,10 +22,10 @@ export function Sidebar() {
         <hr />
       </S.Separator>
 
-      <S.NewFileButton type='button' onClick={createArchive}>
+      <S.NewArchiveButton type='button' onClick={createArchive}>
         <FiPlus size={16} />
         Adicionar arquivo
-      </S.NewFileButton>
+      </S.NewArchiveButton>
 
       <S.ArchiveList>
         {archives.map((archive) => {

@@ -30,7 +30,7 @@ export const Title = styled.input`
   font-size: ${theme.font.sizes.paragraph};
 `
 
-export const NewFileButton = styled.button`
+export const NewArchiveButton = styled.button`
   border: 0;
   height: 4rem;
   display: flex;
