@@ -116,7 +116,7 @@ exports[`<Sidebar /> should render correctly 1`] = `
   background: rgba(255,255,255,0.05);
 }
 
-.c5 a {
+.c5 span {
   color: rgba(255,255,255,0.65);
 }
 
@@ -170,7 +170,7 @@ exports[`<Sidebar /> should render correctly 1`] = `
   margin-left: 1rem;
 }
 
-.c5 a {
+.c5 span {
   color: #fafafa;
 }
 
@@ -271,11 +271,9 @@ exports[`<Sidebar /> should render correctly 1`] = `
           points="10 9 9 9 8 9"
         />
       </svg>
-      <a
-        href="/"
-      >
+      <span>
         Sem título
-      </a>
+      </span>
       <section>
         <button
           type="button"

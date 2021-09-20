@@ -49,6 +49,22 @@ export const InputArea = styled.div`
   }
 `
 
-export const ResultArea = styled.div`
+export const Article = styled.article`
   flex: 1;
+  padding: 7.5rem 3.2rem;
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    margin: 1.6rem 0;
+  }
+
+  pre {
+    padding: 2rem;
+    background: rgba(30, 41, 59, 0.1);
+    border-radius: 0.5rem;
+  }
 `

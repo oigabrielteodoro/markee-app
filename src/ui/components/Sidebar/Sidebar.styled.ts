@@ -95,7 +95,7 @@ export const ArchiveListItem = styled.li<ArchiveListItemProps>`
   height: 5rem;
   cursor: pointer;
 
-  a {
+  span {
     color: rgba(255, 255, 255, 0.65);
   }
 
@@ -158,7 +158,7 @@ export const ArchiveListItem = styled.li<ArchiveListItemProps>`
       opacity: 1;
       background: rgba(255, 255, 255, 0.05);
 
-      a {
+      span {
         color: ${theme.colors.white};
       }
 

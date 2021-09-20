@@ -26,7 +26,7 @@ type ArchiveProviderProps = {
 }
 
 type ArchiveUpdateData = {
-  id?: string
+  id: string
   title?: string
   content?: string
 }
@@ -120,26 +120,22 @@ export function ArchiveProvider({ children }: ArchiveProviderProps) {
     return () => clearTimeout(timer)
   }, [archives])
 
-  useEffect(() => {
-    const selectedArchive = archives.find((archive) => archive.active)
-
-    if (selectedArchive) {
-      window.history.replaceState(null, '', `/archive/${selectedArchive.id}`)
-    }
-  }, [archives])
-
   function createArchive() {
+    const id = v4()
+
     setArchives((prevState) => {
       const newArchives: Archive[] = [
         ...prevState.map((archive) => ({
           ...archive,
           active: false,
         })),
-        { ...initialValue[0], id: v4(), status: 'saved' },
+        { ...initialValue[0], id, status: 'saved' },
       ]
 
       return storageValue(newArchives)
     })
+
+    window.history.replaceState(null, '', `/archive/${id}`)
   }
 
   function deleteArchive(id: string) {
@@ -151,8 +147,6 @@ export function ArchiveProvider({ children }: ArchiveProviderProps) {
   }
 
   async function updateArchive({ id, title, content }: ArchiveUpdateData) {
-    if (!id) return
-
     const archive = getArchive(id)
 
     if (archive) {
@@ -195,6 +189,8 @@ export function ArchiveProvider({ children }: ArchiveProviderProps) {
 
         return storageValue(newArchives)
       })
+
+      window.history.replaceState(null, '', `/archive/${id}`)
     }
   }
 

@@ -1,31 +1,26 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { FiFileText } from 'react-icons/fi'
+import marked from 'marked'
+
+import 'highlight.js/styles/github.css'
 
 import { theme } from 'styles'
-import { useArchive } from 'context'
 
-import { useResize } from './useResize'
+import { useContent } from './useContent'
 
 import * as S from './Content.styled'
 
 export function Content() {
-  const timer = useRef<ReturnType<typeof setTimeout>>()
-
-  const { archive, updateArchive } = useArchive()
-  const { typeAreaRef, typeAreaWidth, onMouseDown } = useResize()
-
-  function handleUpdateContent(value: string) {
-    if (timer.current) {
-      clearTimeout(timer.current)
-    }
-
-    timer.current = setTimeout(() => {
-      updateArchive({
-        id: archive?.id,
-        content: value,
-      })
-    }, 500)
-  }
+  const {
+    archive,
+    inputRef,
+    typeAreaRef,
+    typeAreaWidth,
+    textAreaRef,
+    onMouseDown,
+    onUpdateTitle,
+    onUpdateContent,
+  } = useContent()
 
   if (!archive) {
     return null
@@ -38,28 +33,25 @@ export function Content() {
           <FiFileText size={24} color={theme.colors.blue[500]} />
 
           <input
+            ref={inputRef}
             autoFocus
             placeholder='Nome do arquivo'
-            defaultValue={archive.title}
-            onChange={(event) =>
-              updateArchive({
-                id: archive.id,
-                title: event.currentTarget.value,
-              })
-            }
+            onChange={(event) => onUpdateTitle(event.currentTarget.value)}
           />
         </S.InputArea>
 
         <textarea
-          autoFocus
+          ref={textAreaRef}
           placeholder='Digite o seu conteúdo aqui'
-          onChange={(event) => handleUpdateContent(event.currentTarget.value)}
+          onChange={(event) => onUpdateContent(event.currentTarget.value)}
         />
       </S.TypeArea>
       <S.Separator onMouseDown={onMouseDown} />
-      <S.ResultArea>
-        <h1>Bootcamp React</h1>
-      </S.ResultArea>
+      <S.Article
+        dangerouslySetInnerHTML={{
+          __html: marked(archive.content),
+        }}
+      />
     </S.Container>
   )
 }

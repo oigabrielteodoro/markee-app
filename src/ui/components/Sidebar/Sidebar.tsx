@@ -43,9 +43,9 @@ export function Sidebar() {
             >
               <FiFileText size={24} strokeWidth={1.5} />
 
-              <a href='/' onClick={() => inspectArchive(archive.id)}>
+              <span onClick={() => inspectArchive(archive.id)}>
                 {archive.title}
-              </a>
+              </span>
 
               <section>
                 {(isSaved || isEditing) && (
