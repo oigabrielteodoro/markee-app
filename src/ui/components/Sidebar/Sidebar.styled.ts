@@ -83,6 +83,11 @@ export const ArchiveList = styled.ul`
   display: grid;
   grid-gap: 1.8rem;
   margin-top: 3.5rem;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
 `
 
 export const ArchiveListItem = styled.li<ArchiveListItemProps>`
