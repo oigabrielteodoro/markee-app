@@ -37,6 +37,7 @@ export function Content() {
             autoFocus
             placeholder='Nome do arquivo'
             onChange={(event) => onUpdateTitle(event.currentTarget.value)}
+            maxLength={15}
           />
         </S.InputArea>
 

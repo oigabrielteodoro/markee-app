@@ -19,7 +19,7 @@ import {
 } from 'fp-ts/Option'
 
 import { Archive } from 'types'
-import { identity, pipe } from 'fp-ts/lib/function'
+import { identity, pipe } from 'fp-ts/function'
 
 type ArchiveProviderProps = {
   children: ReactNode
