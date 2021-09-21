@@ -36,7 +36,7 @@ export const Title = styled.input`
 
 export const NewArchiveButton = styled.button`
   border: 0;
-  height: 4rem;
+  min-height: 4rem;
   display: flex;
   margin-top: 2.4rem;
   align-items: center;
